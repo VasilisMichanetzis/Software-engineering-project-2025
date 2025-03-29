@@ -1,0 +1,42 @@
+Νόρα:
+Σωτήρης:
+Βασίλης:
+Μιχάλης:
+Κώστας:
+
+Έχουν γίνει[X] / πρέπει να γίνουν:
+1)Robustness diagram για use case 1[]
+2)Robustness diagram για use case 2[]
+3)Robustness diagram για use case 3[]
+4)Robustness diagram για use case 4[]
+5)Robustness diagram για use case 5[]
+6)Robustness diagram για use case 6[]
+7)Robustness diagram για use case 7[]
+8)Robustness diagram για use case 8[]
+9)Robustness diagram για use case 9[]
+10)Robustness diagram για use case 10[]
+
+11)sequence diagram για use case 1[]
+12)sequence diagram για use case 2[]
+13)sequence diagram για use case 3[]
+14)sequence diagram για use case 4[]
+15)sequence diagram για use case 5[]
+16)sequence diagram για use case 6[]
+17)sequence diagram για use case 7[]
+18)sequence diagram για use case 8[]
+19)sequence diagram για use case 9[]
+20)sequence diagram για use case 10[]
+
+-->gui(Σωτήρης και Βασίλης)[]
+-borders[]
+-creators[]
+
+-->class 'block'[]
+
+-block list[]
+
+-block types[] 
+--output[]
+
+-run the list[]
+
