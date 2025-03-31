@@ -2,14 +2,14 @@
 Σωτήρης:
 Βασίλης:
 Μιχάλης: Robustness diagrams για use cases: 1, 2 και 3
-Κώστας: robustness για 5
+Κώστας: 
 
 Έχουν γίνει[X] / πρέπει να γίνουν:
 1)Robustness diagram για use case 1[X] 
 2)Robustness diagram για use case 2[X] 
 3)Robustness diagram για use case 3[X]
 4)Robustness diagram για use case 4[Χ]
-5)Robustness diagram για use case 5[]
+5)Robustness diagram για use case 5[X]
 6)Robustness diagram για use case 6[]
 7)Robustness diagram για use case 7[]
 8)Robustness diagram για use case 8[]
