@@ -13,8 +13,8 @@
 6)Robustness diagram για use case 6[X]
 7)Robustness diagram για use case 7[X]
 8)Robustness diagram για use case 8[X]
-9)Robustness diagram για use case 9[]
-10)Robustness diagram για use case 10[]
+9)Robustness diagram για use case 9[X]
+10)Robustness diagram για use case 10[X]
 
 11)sequence diagram για use case 1[]
 12)sequence diagram για use case 2[]
