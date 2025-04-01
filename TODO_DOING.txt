@@ -1,5 +1,5 @@
 Νόρα:
-Σωτήρης:
+Σωτήρης: 
 Βασίλης:
 Μιχάλης: Robustness diagrams για use cases: 1, 2 και 3
 Κώστας: 
@@ -27,16 +27,42 @@
 19)sequence diagram για use case 9[]
 20)sequence diagram για use case 10[]
 
--->gui(Σωτήρης και Βασίλης)[]
--borders[]
--creators[]
 
--->class 'block'[]
 
--block list[]
+---------------CODE ROADMAP------------------
+PRIORITY: <---
 
--block types[] 
+
+---gui---
+-panels[x]
+-block creator[x]
+-specific creators for subclasses[]
+-declarations[]
 --output[]
+
+
+---class 'block'---[]
+-drag and drop[x]
+-delete[x]
+-stay in panel[x]
+-check and use input[] <---
+-snap to other blocks[] <---
+
+-block list[] <---
+
+--subclasses for block:
+start[] <---
+end[] <---
+math block[] <---
+if block[]
+end if[]
+while block[]
+end while[]
 
 -run the list[]
 
+-debug mode[]
+-function[]
+
+-undo/redo[]
+-save[]
