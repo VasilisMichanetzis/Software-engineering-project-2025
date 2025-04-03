@@ -31,18 +31,18 @@ PRIORITY: <---
 -panels[x]
 -block creator[x]
 -specific creators for subclasses[]
--declarations[]
---output[]
+-declarations[]Σωτηρης
+--output[]Σωτηρης
 
 
 ---class 'block'---[]
 -drag and drop[x]
 -delete[x] --na rotaei prin to diagrafei
 -stay in panel[x]
--check and use input[] <---
+-check and use input[] <--- Σωτηρης
 -snap to other blocks[] <---
 
--block list[] <---
+-block list[] <---Σωτηρης
 
 --subclasses for block:
 start[] <---
