@@ -1,13 +1,7 @@
-Νόρα:
-Σωτήρης: 
-Βασίλης:
-Μιχάλης: Robustness diagrams για use cases: 1, 2 και 3
-Κώστας: 
-
 Έχουν γίνει[X] / πρέπει να γίνουν:
-1)Robustness diagram για use case 1[X] 
-2)Robustness diagram για use case 2[X] 
-3)Robustness diagram για use case 3[X]
+1)Robustness diagram για use case 1[] 
+2)Robustness diagram για use case 2[] 
+3)Robustness diagram για use case 3[]
 4)Robustness diagram για use case 4[Χ]
 5)Robustness diagram για use case 5[X]
 6)Robustness diagram για use case 6[X]
@@ -43,7 +37,7 @@ PRIORITY: <---
 
 ---class 'block'---[]
 -drag and drop[x]
--delete[x]
+-delete[x] --na rotaei prin to diagrafei
 -stay in panel[x]
 -check and use input[] <---
 -snap to other blocks[] <---
