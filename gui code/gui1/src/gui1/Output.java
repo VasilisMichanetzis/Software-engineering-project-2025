@@ -7,9 +7,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class botpanel extends JPanel{
+public class Output extends JPanel{
 	
-	botpanel()
+	Output()
 	{
 		
 		this.setBackground(Color.pink);

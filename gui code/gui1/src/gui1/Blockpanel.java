@@ -10,23 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class leftpanel extends JPanel{
+public class Blockpanel extends JPanel{
 	
-	 private mainpanel codepanel;
+	 private Canvas codepanel;
 	
 	
-	leftpanel(mainpanel codepanel)
+	Blockpanel(Canvas codepanel)
 	{
 		this.codepanel = codepanel;
 		this.setBackground(Color.red);
-		this.setPreferredSize(new Dimension(200,200));
+		this.setPreferredSize(new Dimension(150,150));
 		this.setLayout(null);
 		
 		Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
 	    this.setBorder(border);
 	     
 	     
-		varbutton button1 = new varbutton();
+		Blockbutton button1 = new Blockbutton();
 		
 		
 	    button1.addActionListener(new ActionListener() {

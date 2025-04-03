@@ -4,25 +4,27 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
 
-public class gui extends JFrame{
+public class Gui extends JFrame{
 
 		
-	gui()
+	Gui()
 	{	
 			
-			this.setTitle("test");
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			this.setSize(1200, 800);
 			this.setVisible(true);
 			this.getContentPane().setBackground(new Color(255,255,255));
 			
-			mainpanel codepanel = new mainpanel();
+			Canvas codepanel = new Canvas();
 			this.add(codepanel,BorderLayout.CENTER);
-			leftpanel varpanel = new leftpanel(codepanel);
-			this.add(varpanel,BorderLayout.WEST);
-			toppanel declpanel = new toppanel();
+			
+			Blockpanel blockpanel = new Blockpanel(codepanel);
+			this.add(blockpanel,BorderLayout.WEST);
+			
+			Declaration declpanel = new Declaration();
 			this.add(declpanel,BorderLayout.NORTH);
-			botpanel outpanel = new botpanel();
+			
+			Output outpanel = new Output();
 			this.add(outpanel,BorderLayout.SOUTH);
 			
 			

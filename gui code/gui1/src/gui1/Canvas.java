@@ -7,10 +7,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class mainpanel extends JPanel{
+public class Canvas extends JPanel{
 	private int dragPanelCount = 0;
 	
-	mainpanel()
+	Canvas()
 	{
 		
 		this.setBackground(Color.cyan);
@@ -28,7 +28,7 @@ public class mainpanel extends JPanel{
 		 if (dragPanelCount == 5) {dragPanelCount=0;}
 		 
 	        Dragpanel block = new Dragpanel();
-	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 250, 100); // Staggered positions
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 250, 90); // Staggered positions
 
 	        this.add(block);
 	        this.revalidate();

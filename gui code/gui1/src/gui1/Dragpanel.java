@@ -29,7 +29,7 @@ public class Dragpanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Container parent = getParent();
                 if (parent != null) {
-                    parent.remove(Dragpanel.this); // ✅ Remove itself from mainpanel
+                    parent.remove(Dragpanel.this); // Remove itself from mainpanel
                     parent.revalidate();
                     parent.repaint();
                 }

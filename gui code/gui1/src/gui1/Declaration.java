@@ -7,9 +7,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
-public class toppanel extends JPanel{
+public class Declaration extends JPanel{
 	
-	toppanel()
+	Declaration()
 	{
 		
 		this.setBackground(Color.green);
