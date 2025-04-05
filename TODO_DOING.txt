@@ -28,18 +28,20 @@ PRIORITY: <---
 
 
 ---gui---
--panels[x]
--block creator[x]
+-panels[x]Σωτηρης
+-block creator[x]Σωτηρης
 -specific creators for subclasses[]
--declarations[]Σωτηρης
---output[]Σωτηρης
+-declarations[X]Σωτηρης
+-varlist[X]
+--output[X]Σωτηρης
 
 
 ---class 'block'---[]
--drag and drop[x]
--delete[x] --na rotaei prin to diagrafei
--stay in panel[x]
--check and use input[] <--- Σωτηρης
+-drag and drop[x]Σωτηρης
+-delete[x]Σωτηρης 
+--na rotaei prin to diagrafei[]
+-stay in panel[x]Σωτηρης
+-check and use input[X] <--- Σωτηρης
 -snap to other blocks[] <---
 
 -block list[] <---Σωτηρης
