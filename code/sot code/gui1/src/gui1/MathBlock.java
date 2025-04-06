@@ -2,11 +2,19 @@ package gui1;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 public class MathBlock extends Dragpanel{
-
+	
+  private JTextField updatedvarField;
+  private JTextField pos1Field;
+  private JTextField symbolField;
+  private JTextField pos2Field;
 	
 	MathBlock(){
 		
@@ -21,10 +29,130 @@ public class MathBlock extends Dragpanel{
         label1.setBounds(35, 35, 130, 60);
         this.add(label1);
 
+        updatedvarField = new JTextField();
+        updatedvarField.setBounds(3, 52, 25, 25);
+        this.add(updatedvarField);
         
+        pos1Field = new JTextField();
+        pos1Field.setBounds(53, 52, 25, 25);
+        this.add(pos1Field);
         
+        symbolField = new JTextField();
+        symbolField.setBounds(78, 52, 25, 25);
+        this.add(symbolField);
+        
+        pos2Field = new JTextField();
+        pos2Field.setBounds(103, 52, 25, 25);
+        this.add(pos2Field);
+        
+        //temporary for testing
+        //
+        JButton checkButton = new JButton();
+        //closeButton.setPreferredSize(new Dimension(45, 45));
+        checkButton.setBackground(Color.GREEN);
+        checkButton.setBounds(0, 0, 20, 20);
+        checkButton.setFocusable(false);
+        
+        checkButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(getmath());
+                
+                //VarList.printAll();
+
+            }
+        });
+        
+        this.add(checkButton);
+
         
         
 	}
 	
+	public String getmath() {
+    	
+        String updatedvar = updatedvarField.getText().trim();
+        String pos1 = pos1Field.getText().trim();
+        String symbol = symbolField.getText().trim();
+        String pos2 = pos2Field.getText().trim();
+        
+        
+        if(updatedvar.isEmpty() || pos1.isEmpty() || symbol.isEmpty() || pos2.isEmpty()) 
+        {
+        	this.setBackground(Color.red);
+        	return "error";
+        }
+        
+        if (!(symbol.contains("+")||symbol.contains("-")||symbol.contains("/")||symbol.contains("*"))) 
+        {
+        	
+        	return "error: operation symbol input";
+        	
+        }
+           
+        //for 1st field
+       int isinlist =0;
+        for (int i = 0; i < VarList.entries.size(); i++) 
+        {
+            VarEntry entry = VarList.entries.get(i);
+            if (entry != null && entry.name.equals(updatedvar)) 
+            {
+            	isinlist = 1;
+            }
+         }     
+         if(isinlist == 0) 
+         {
+            this.setBackground(Color.red);
+            return "error: 1st entry not found in declarations";
+         }
+      
+        //2nd field
+        try {
+            Integer.parseInt(pos1);  // Try to convert value to an integer
+        } catch (NumberFormatException e) {
+        	
+        	isinlist =0;
+            for (int i = 0; i < VarList.entries.size(); i++) 
+            {
+                VarEntry entry = VarList.entries.get(i);
+                if (entry != null && entry.name.equals(pos1)) 
+                {
+                	isinlist = 1;
+                }
+             }     
+             if(isinlist == 0) 
+             {
+                this.setBackground(Color.red);
+                return "error: 2nd entry not found in declarations or not an integer";
+             }
+
+        }
+        
+        //4th field
+        try {
+            Integer.parseInt(pos2);  // Try to convert value to an integer
+        } catch (NumberFormatException e) {
+        	
+        	isinlist =0;
+            for (int i = 0; i < VarList.entries.size(); i++) 
+            {
+                VarEntry entry = VarList.entries.get(i);
+                if (entry != null && entry.name.equals(pos2)) 
+                {
+                	isinlist = 1;
+                }
+             }     
+             if(isinlist == 0) 
+             {
+                this.setBackground(Color.red);
+                return "error: 4th entry not found in declarations or not an integer";
+             }
+
+        }
+        
+        
+        this.setBackground(Color.gray);
+		
+        return this.type+updatedvar+"="+pos1+symbol+pos2;
+    }
 }
