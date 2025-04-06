@@ -1,6 +1,12 @@
 package gui1;
 
 import javax.swing.*;
+
+import src.gui1.Dragpanel;
+import src.gui1.GhostPanelPreview;
+import src.gui1.SnapManager;
+import src.gui1.SnapResult;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,6 +17,16 @@ public class Dragpanel extends JPanel {
 	private int mouseX, mouseY;
     
     public String type;
+    private final int SNAP_THRESHOLD = 20;
+    private final int UNSNAP_DISTANCE = 120;
+    // Snap state: 0 = not snapped, 1 = snapped (right edge), -1 = snapped (left edge)
+    private int snapState = 0;
+    // Record the x-coordinate when snapping occurred.
+    private int snapReferenceX = 0;
+    // Locked y coordinate when snapped.
+    private int lockedY = -1;
+    private GhostPanelPreview ghostPreview = new GhostPanelPreview();
+    
     
     Dragpanel() 
     {
@@ -51,6 +67,17 @@ public class Dragpanel extends JPanel {
                 mouseX = e.getX();
                 mouseY = e.getY();
             }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                SnapResult result = SnapManager.calculateSnap(Dragpanel.this, getParent(), getX(), getY(), SNAP_THRESHOLD);
+                if (result.isSnapped()) {
+                    snapState = result.getSnapState();
+                    snapReferenceX = result.getSnapX();
+                    lockedY = result.getSnapY(); // Lock y to neighbor's y.
+                    setLocation(snapReferenceX, lockedY);
+                }
+                ghostPreview.remove(getParent());
+            }
         });
 
         this.addMouseMotionListener(new MouseMotionAdapter() {
@@ -61,6 +88,39 @@ public class Dragpanel extends JPanel {
                 // Calculate new position
                 int newX = getX() + e.getX() - mouseX;
                 int newY = getY() + e.getY() - mouseY;
+                if(snapState != 0 && lockedY != -1) {
+                    newY = lockedY;
+                }
+                
+                if(snapState == 1) {
+                    if(newX < snapReferenceX - UNSNAP_DISTANCE) {
+                        snapState = 0;
+                        lockedY = -1;
+                    } else {
+                        newX = snapReferenceX;
+                    }
+                } else if(snapState == -1) {
+                    if(newX > snapReferenceX + UNSNAP_DISTANCE) {
+                        snapState = 0;
+                        lockedY = -1;
+                    } else {
+                        newX = snapReferenceX;
+                    }
+                }
+                
+                if(snapState == 0) {
+                    SnapResult ghostResult = SnapManager.calculateSnap(Dragpanel.this, getParent(), newX, newY, SNAP_THRESHOLD);
+                    if(ghostResult.isSnapped()) {
+                        int ghostX = ghostResult.getSnapX();
+                        int ghostY = ghostResult.getSnapY();
+                        int dragZ = getParent().getComponentZOrder(Dragpanel.this);
+                        ghostPreview.update(getParent(), ghostX, ghostY, getWidth(), getHeight(), dragZ + 1);
+                    } else {
+                        ghostPreview.remove(getParent());
+                    }
+                } else {
+                    ghostPreview.remove(getParent());
+                }
 
                 // Keep inside the parent panel (ContainerPanel)
                 int maxX = getParent().getWidth() - getWidth();
