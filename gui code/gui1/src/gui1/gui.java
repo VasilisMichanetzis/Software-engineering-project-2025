@@ -4,10 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JFrame;
 
-public class Gui extends JFrame{
+public class gui extends JFrame{
 
 		
-	Gui()
+	gui()
 	{	
 			
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
