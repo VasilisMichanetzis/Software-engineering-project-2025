@@ -1,0 +1,44 @@
+package gui1;
+
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class WhileBlock extends Dragpanel {
+
+    JTextField leftFiled;
+    JTextField operatorField; 
+    JTextField rightField;
+
+    public WhileBlock() {
+
+        this.type = "while";
+        this.setLayout(null);
+        this.setBackground(new Color(100, 149, 237));
+
+       
+        JLabel whileLabel = new JLabel("while");
+        label.setFont(new Font("Arial", Font.BOLD, 22));
+        label.setBounds(10, 10, 60, 30);
+        this.add(label);
+
+        
+        leftField = new JTextField();
+        leftField.setBounds(75, 10, 60, 30);
+        this.add(leftField);
+
+       
+        operatorField = new JTextField();
+        operatorField.setBounds(140, 10, 60, 30);
+        this.add(operatorField);
+
+       
+        rightField = new JTextField();
+        rightField.setBounds(205, 10, 60, 30);
+        this.add(rightField);
+
+        
+    }
+
+}
