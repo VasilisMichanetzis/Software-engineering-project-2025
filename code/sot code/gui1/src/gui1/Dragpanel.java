@@ -2,10 +2,10 @@ package gui1;
 
 import javax.swing.*;
 
-import src.gui1.Dragpanel;
-import src.gui1.GhostPanelPreview;
-import src.gui1.SnapManager;
-import src.gui1.SnapResult;
+//import gui1.Dragpanel;
+//import gui1.GhostPanelPreview;
+//import gui1.SnapManager;
+//import gui1.SnapResult;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,9 +14,11 @@ import java.awt.event.*;
 
 public class Dragpanel extends JPanel {
     
+
 	private int mouseX, mouseY;
     
     public String type;
+    
     private final int SNAP_THRESHOLD = 20;
     private final int UNSNAP_DISTANCE = 120;
     // Snap state: 0 = not snapped, 1 = snapped (right edge), -1 = snapped (left edge)
@@ -30,6 +32,7 @@ public class Dragpanel extends JPanel {
     
     Dragpanel() 
     {
+
         this.setBackground(Color.BLUE);
         this.setPreferredSize(new Dimension(200, 100));
         this.setBounds(100, 150, 210, 90); // Initial position inside the container panel
@@ -50,9 +53,14 @@ public class Dragpanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 Container parent = getParent();
                 if (parent != null) {
-                    parent.remove(Dragpanel.this); // Remove itself from mainpanel
-                    parent.revalidate();
+                    parent.remove(Dragpanel.this); // Remove itself from canvas
+                    parent.revalidate();  
                     parent.repaint();
+                    
+                    if (type.contentEquals("start")) {CodeList.numstart=0; }
+                    if (type.contentEquals("end")) {CodeList.numend=0; }
+                    
+                    
                 }
             }
         });

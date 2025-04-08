@@ -1,11 +1,12 @@
 package gui1;
 
 public class VarEntry {
+	public Varpanel panel;
     public String name;
-    public String value;
+    public int value;
     public int index;
 
-    public VarEntry(String name, String value,int index) {
+    public VarEntry(String name, int value,int index) {
         this.name = name;
         this.value = value;
         this.index = index;

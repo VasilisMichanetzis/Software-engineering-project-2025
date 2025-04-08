@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -41,7 +42,21 @@ public class Declaration extends JPanel{
 		
 		this.add(declbutton1);
 		
-
+		JButton checkbutton = new JButton();
+		checkbutton.setBounds(140, 10, 90, 30);
+		checkbutton.setText("check");
+	    checkbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	checkAllPanels();
+	            	VarList.printAll();
+	                outpanel.create_out_elements();
+	            }
+	        });
+		
+		
+		this.add(checkbutton);
+		
 	}
 
 	
@@ -74,5 +89,12 @@ public class Declaration extends JPanel{
 	    varcount--;
 	}
 
+	public void checkAllPanels() {
+	    for (java.awt.Component comp : this.getComponents()) {
+	        if (comp instanceof Varpanel) {
+	            ((Varpanel) comp).getEntry();
+	        }
+	    }
+	}
 
 }

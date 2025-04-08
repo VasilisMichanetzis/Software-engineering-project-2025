@@ -15,7 +15,20 @@ public class MathBlock extends Dragpanel{
   private JTextField pos1Field;
   private JTextField symbolField;
   private JTextField pos2Field;
-	
+
+  String updatedvar;
+  String pos1;
+  String symbol;
+  String pos2;
+  
+  int pos1int;
+  int pos2int;
+  
+  private VarEntry first;
+  private VarEntry second;
+  private VarEntry forth;
+  
+  
 	MathBlock(){
 		
 		this.type="math";
@@ -56,10 +69,8 @@ public class MathBlock extends Dragpanel{
         checkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(getmath());
-                
-                //VarList.printAll();
-
+                getmath();
+                execute();
             }
         });
         
@@ -71,10 +82,10 @@ public class MathBlock extends Dragpanel{
 	
 	public String getmath() {
     	
-        String updatedvar = updatedvarField.getText().trim();
-        String pos1 = pos1Field.getText().trim();
-        String symbol = symbolField.getText().trim();
-        String pos2 = pos2Field.getText().trim();
+        updatedvar = updatedvarField.getText().trim();
+        pos1 = pos1Field.getText().trim();
+        symbol = symbolField.getText().trim();
+        pos2 = pos2Field.getText().trim();
         
         
         if(updatedvar.isEmpty() || pos1.isEmpty() || symbol.isEmpty() || pos2.isEmpty()) 
@@ -98,6 +109,7 @@ public class MathBlock extends Dragpanel{
             if (entry != null && entry.name.equals(updatedvar)) 
             {
             	isinlist = 1;
+            	first = entry;
             }
          }     
          if(isinlist == 0) 
@@ -108,7 +120,8 @@ public class MathBlock extends Dragpanel{
       
         //2nd field
         try {
-            Integer.parseInt(pos1);  // Try to convert value to an integer
+            pos1int=Integer.parseInt(pos1);  // Try to convert value to an integer
+            System.out.println(pos1int);
         } catch (NumberFormatException e) {
         	
         	isinlist =0;
@@ -118,6 +131,7 @@ public class MathBlock extends Dragpanel{
                 if (entry != null && entry.name.equals(pos1)) 
                 {
                 	isinlist = 1;
+                	second = entry;
                 }
              }     
              if(isinlist == 0) 
@@ -130,7 +144,8 @@ public class MathBlock extends Dragpanel{
         
         //4th field
         try {
-            Integer.parseInt(pos2);  // Try to convert value to an integer
+            pos2int=Integer.parseInt(pos2);  // Try to convert value to an integer
+			System.out.println(pos2int);
         } catch (NumberFormatException e) {
         	
         	isinlist =0;
@@ -140,6 +155,7 @@ public class MathBlock extends Dragpanel{
                 if (entry != null && entry.name.equals(pos2)) 
                 {
                 	isinlist = 1;
+                	forth = entry;
                 }
              }     
              if(isinlist == 0) 
@@ -155,4 +171,83 @@ public class MathBlock extends Dragpanel{
 		
         return this.type+updatedvar+"="+pos1+symbol+pos2;
     }
+	
+	
+	public String execute() 
+	{
+	
+		System.out.println("field 1:"+second);
+		System.out.println("field 2:"+forth);
+		
+		if (second==null && forth==null) 
+		{
+			if (symbol.contentEquals("+")) 
+			{	
+				first.value=pos1int+pos2int;
+			}
+			else if (symbol.contentEquals("-")) 
+			{
+				first.value=pos1int-pos2int;
+			}
+			else if (symbol.contentEquals("/")) 
+			{
+				first.value=pos1int/pos2int;
+			}
+			else if (symbol.contentEquals("*")) 
+			{
+				first.value=pos1int*pos2int;
+			}
+			
+			
+		}
+		else if (forth==null) 
+		{
+			if (symbol.contentEquals("+")) 
+			{	
+				first.value=second.value+pos2int;
+			}
+			else if (symbol.contentEquals("-")) 
+			{
+				first.value=second.value-pos2int;
+			}
+			else if (symbol.contentEquals("/")) 
+			{
+				first.value=second.value/pos2int;
+			}
+			else if (symbol.contentEquals("*")) 
+			{
+				first.value=second.value*pos2int;
+			}
+			
+			
+		}
+		else if (second==null)
+		{
+			
+			if (symbol.contentEquals("+")) 
+			{	
+				first.value=pos1int+forth.value;
+			}
+			else if (symbol.contentEquals("-")) 
+			{
+				first.value=pos1int-forth.value;
+			}
+			else if (symbol.contentEquals("/")) 
+			{
+				first.value=pos1int/forth.value;
+			}
+			else if (symbol.contentEquals("*")) 
+			{
+				first.value=pos1int*forth.value;
+			}
+
+		}
+
+
+		VarList.printAll();
+		
+		return first.name+"="+first.value;
+	}
+	
+	
 }

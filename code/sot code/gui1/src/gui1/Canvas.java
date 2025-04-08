@@ -9,6 +9,9 @@ import javax.swing.border.Border;
 
 public class Canvas extends JPanel{
 	private int dragPanelCount = 0;
+
+	
+	
 	
 	Canvas()
 	{
@@ -26,20 +29,26 @@ public class Canvas extends JPanel{
 	 public void addStartBlock() {
 
 		 if (dragPanelCount == 5) {dragPanelCount=0;}
-		 
+		 	if(CodeList.numstart == 0) 
+		 	{
+		 	CodeList.numstart=1;
 	        StartBlock block = new StartBlock();
-	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
-
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); 
 	        this.add(block);
 	        this.revalidate();
 	        this.repaint();
+	        
+	        dragPanelCount++;
+		 	}
+		 }
 
-	        dragPanelCount++; // Track added panels
-	    }
+	 
 	 public void addEndBlock() {
 
 		 if (dragPanelCount == 5) {dragPanelCount=0;}
-		 
+		 	if(CodeList.numend == 0) 
+		 	{
+		 	CodeList.numend=1;
 	        EndBlock block = new EndBlock();
 	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
 
@@ -48,6 +57,7 @@ public class Canvas extends JPanel{
 	        this.repaint();
 
 	        dragPanelCount++; // Track added panels
+		 	}
 	    }
 	 public void addMathBlock() {
 

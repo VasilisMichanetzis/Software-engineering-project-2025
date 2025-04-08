@@ -62,25 +62,7 @@ public class Varpanel extends JPanel {
             }
         });
         this.add(closeButton);
-        
-        JButton checkButton = new JButton();
-        //closeButton.setPreferredSize(new Dimension(45, 45));
-        checkButton.setBackground(Color.GREEN);
-        checkButton.setBounds(88, 22, 20, 20);
-        checkButton.setFocusable(false);
-        
-        checkButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(getEntry());
-                VarList.printAll();
-                outpanel.create_out_elements();
-            }
-        });
-        
-        this.add(checkButton);
-        
-        
+      
     }
 
     public void rempanel() {
@@ -92,6 +74,7 @@ public class Varpanel extends JPanel {
     	
         String name = varField.getText().trim();
         String value = valueField.getText().trim();
+        int intval=0;
         
         if(name.isEmpty() || value.isEmpty()) {
         	this.setBackground(Color.red);
@@ -102,7 +85,7 @@ public class Varpanel extends JPanel {
 
         // Check if value is an integer
         try {
-            Integer.parseInt(value);  // Try to convert value to an integer
+            intval=Integer.parseInt(value);  // Try to convert value to an integer
         } catch (NumberFormatException e) {
         	this.setBackground(Color.red);
             return "error: value must be an integer";
@@ -130,7 +113,7 @@ public class Varpanel extends JPanel {
                 return "error: duplicate variable name";
             }
         }
-        VarEntry varentry = new VarEntry(name, value,index);
+        VarEntry varentry = new VarEntry(name, intval,index);
         VarList.setEntry(index, varentry);
         this.setBackground(Color.BLUE);
         return varentry.toString();

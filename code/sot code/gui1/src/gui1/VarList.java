@@ -25,6 +25,7 @@ public class VarList {
         }
     }
 
+    
     public static void printAll() {
         for (int i = 0; i < MAX_VARS; i++) {
             VarEntry e = entries.get(i);
