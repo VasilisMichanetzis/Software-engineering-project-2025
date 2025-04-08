@@ -51,6 +51,14 @@ PRIORITY: <---
 -snapping info stored[X]<---Βασίλης
 
 -block list[] <---Σωτηρης
+-creation on start block[X]
+-deletion on erase start block[X]
+-add block on snap[]<-Βασίλης
+-delete from list on block deletion or unsnapping[]<-Βασίλης
+-compile method[]Σωτηρης
+-execute method[]Σωτηρης
+
+
 
 --subclasses for block:
 start[x] <---Σωτηρης
@@ -61,7 +69,8 @@ end if[]
 while block[]
 end while[]
 
--run the list[]
+
+
 
 -debug mode[]
 -function[]
