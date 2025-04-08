@@ -33,7 +33,7 @@ PRIORITY: <---
 -specific creators for subclasses[]
 --start end math[x]
 -declarations[X]Σωτηρης
--varlist[X]
+-varlist[X]Σωτηρης
 --output[X]Σωτηρης
 
 
@@ -55,7 +55,7 @@ PRIORITY: <---
 --subclasses for block:
 start[x] <---Σωτηρης
 end[x] <---Σωτηρης
-math block[] <---Σωτηρης (σχεδόν ετοιμο)
+math block[X] <---Σωτηρης
 if block[]
 end if[]
 while block[]
