@@ -27,16 +27,18 @@
 PRIORITY: <---
 
 
----gui---
+---gui---------------------------------------
 -panels[x]Σωτηρης
 -block creator[x]Σωτηρης
 -specific creators for subclasses[]
 --start end math[x]
+--if end if[]
+--while end while[]
 -declarations[X]Σωτηρης
 -varlist[X]Σωτηρης
 --output[X]Σωτηρης
 
-
+-----------------------------------------------
 ---class 'block'---[x]
 -drag and drop[x]Σωτηρης
 -delete[x]Σωτηρης 
@@ -50,15 +52,31 @@ PRIORITY: <---
 -unsnap with delay[X] <---Βασίλης
 -snapping info stored[X]<---Βασίλης
 
--block list[] <---Σωτηρης
+-----------------------------------------------------
+-code list[X] <---Σωτηρης
 -creation on start block[X]
 -deletion on erase start block[X]
+-----------
+-----------
 -add block on snap[]<-Βασίλης
 -delete from list on block deletion or unsnapping[]<-Βασίλης
--compile method[]Σωτηρης
+-----------
+-----------
+-compile method[X]Σωτηρης
+--na xeirizetai math start[X]
+
+--elegxos teleytaio end[]Σωτηρης
+
+--na xeirizetai while kai end while[]
+--na xeirizetai if kai end if[]
+-------------
+-------------
 -execute method[]Σωτηρης
-
-
+--wait timers[]Σωτηρης
+--na xeirizetai math start[X]
+--na xeirizetai while kai end while[]
+--na xeirizetai if kai end if[]
+---------------------------------------------------
 
 --subclasses for block:
 start[x] <---Σωτηρης
@@ -69,7 +87,7 @@ end if[]
 while block[]
 end while[]
 
-
+-----------------------------------------------------
 
 
 -debug mode[]
@@ -77,3 +95,4 @@ end while[]
 
 -undo/redo[]
 -save[]
+-import[]
