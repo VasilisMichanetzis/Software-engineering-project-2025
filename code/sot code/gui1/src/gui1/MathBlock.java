@@ -69,7 +69,7 @@ public class MathBlock extends Dragpanel{
         checkButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getmath();
+                checkmath();
                 execute();
             }
         });
@@ -80,7 +80,7 @@ public class MathBlock extends Dragpanel{
         
 	}
 	
-	public String getmath() {
+	public String checkmath() {
     	
         updatedvar = updatedvarField.getText().trim();
         pos1 = pos1Field.getText().trim();
@@ -121,7 +121,7 @@ public class MathBlock extends Dragpanel{
         //2nd field
         try {
             pos1int=Integer.parseInt(pos1);  // Try to convert value to an integer
-            System.out.println(pos1int);
+            //System.out.println(pos1int);
         } catch (NumberFormatException e) {
         	
         	isinlist =0;
@@ -145,7 +145,7 @@ public class MathBlock extends Dragpanel{
         //4th field
         try {
             pos2int=Integer.parseInt(pos2);  // Try to convert value to an integer
-			System.out.println(pos2int);
+			//System.out.println(pos2int);
         } catch (NumberFormatException e) {
         	
         	isinlist =0;
@@ -176,8 +176,8 @@ public class MathBlock extends Dragpanel{
 	public String execute() 
 	{
 	
-		System.out.println("field 1:"+second);
-		System.out.println("field 2:"+forth);
+		//System.out.println("field 1:"+second);
+		//System.out.println("field 2:"+forth);
 		
 		if (second==null && forth==null) 
 		{
@@ -241,6 +241,26 @@ public class MathBlock extends Dragpanel{
 				first.value=pos1int*forth.value;
 			}
 
+		}
+		else
+		{
+			if (symbol.contentEquals("+")) 
+			{	
+				first.value=second.value+forth.value;
+			}
+			else if (symbol.contentEquals("-")) 
+			{
+				first.value=second.value-forth.value;
+			}
+			else if (symbol.contentEquals("/")) 
+			{
+				first.value=second.value/forth.value;
+			}
+			else if (symbol.contentEquals("*")) 
+			{
+				first.value=second.value*forth.value;
+			}
+			
 		}
 
 

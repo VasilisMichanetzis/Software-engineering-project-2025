@@ -1,5 +1,6 @@
 package gui1;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -56,6 +57,44 @@ public class Declaration extends JPanel{
 		
 		
 		this.add(checkbutton);
+		
+		
+		
+		
+		JButton runbutton = new JButton();
+		runbutton.setBounds( 1000, 20, 100, 100);
+		runbutton.setText("run");
+	    runbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	CodeList.ProgCounter=0;
+	            	while(CodeList.ProgCounter<=CodeList.ProgMax) {
+	            	//System.out.println("Prog Max = "+CodeList.ProgMax);	
+	            	CodeList.run(CodeList.ProgCounter);
+	            	VarList.printAll();
+	            	outpanel.create_out_elements();
+	            	//System.out.println("Prog Counter = "+CodeList.ProgCounter);
+	            	CodeList.ProgCounter++;
+	            	}
+	            }
+	        });
+		
+		runbutton.setVisible(true);
+		this.add(runbutton);
+		
+		JButton compbutton = new JButton();
+		compbutton.setBounds( 900, 20, 100, 100);
+		compbutton.setText("Comp");
+		compbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	            	CodeList.compile();
+	            }
+	        });
+		
+		compbutton.setVisible(true);
+		this.add(compbutton);
+			
 		
 	}
 

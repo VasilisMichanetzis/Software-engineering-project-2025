@@ -57,8 +57,15 @@ public class Dragpanel extends JPanel {
                     parent.revalidate();  
                     parent.repaint();
                     
-                    if (type.contentEquals("start")) {CodeList.numstart=0; }
-                    if (type.contentEquals("end")) {CodeList.numend=0; }
+                    if (type.contentEquals("start")) 
+                    	{
+                    	CodeList.numstart=0; 
+                    	CodeList.clear();
+                    	CodeList.lastpanelin=null;
+                    	}
+                    if (type.contentEquals("end")) {CodeList.numend=0; CodeList.removeBlock(Dragpanel.this); }
+                    if (type.contentEquals("math")) {CodeList.removeBlock(Dragpanel.this); }
+                    
                     
                     
                 }
@@ -67,6 +74,31 @@ public class Dragpanel extends JPanel {
 
         this.add(closeButton); // Add delete button to panel
         
+        //temp button for adding dragpanels to codelist
+        
+        
+        JButton addtolist = new JButton();
+        addtolist.setBounds(50, 0, 20, 20); // Position inside the panel
+        addtolist.setFocusable(false);
+        
+        addtolist.addActionListener(new ActionListener() 
+        {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               if(CodeList.lastpanelin!=null) 
+               {
+            	   CodeList.insertRightOf(CodeList.lastpanelin,Dragpanel.this);
+            	   CodeList.lastpanelin=Dragpanel.this;
+               }
+            	
+            	
+            }
+        });
+        
+        
+        this.add(addtolist);
+        
+        //------------------------------------------------
 
         // Mouse listener for dragging
         this.addMouseListener(new MouseAdapter() {
@@ -83,6 +115,7 @@ public class Dragpanel extends JPanel {
                     snapReferenceX = result.getSnapX();
                     lockedY = result.getSnapY(); // Lock y to neighbor's y.
                     setLocation(snapReferenceX, lockedY);
+                    
                 }
                 ghostPreview.remove(getParent());
             }

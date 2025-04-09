@@ -37,7 +37,8 @@ public class Canvas extends JPanel{
 	        this.add(block);
 	        this.revalidate();
 	        this.repaint();
-	        
+	        CodeList.addStartBlock(block);
+	        CodeList.lastpanelin=block;
 	        dragPanelCount++;
 		 	}
 		 }
