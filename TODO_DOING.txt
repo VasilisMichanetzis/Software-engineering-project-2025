@@ -9,20 +9,23 @@
 8)Robustness diagram για use case 8[X]
 9)Robustness diagram για use case 9[X]
 10)Robustness diagram για use case 10[X]
+---------------------------------------------------------------------
 
-11)sequence diagram για use case 1[]
-12)sequence diagram για use case 2[]
-13)sequence diagram για use case 3[]
-14)sequence diagram για use case 4[]
-15)sequence diagram για use case 5[]
-16)sequence diagram για use case 6[]
+11)sequence diagram για use case 1[]<--
+12)sequence diagram για use case 2[]<--
+
+13)sequence diagram για use case 3[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
+14)sequence diagram για use case 4[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
+
+15)sequence diagram για use case 5[]<--
+16)sequence diagram για use case 6[]<--
 17)sequence diagram για use case 7[]
 18)sequence diagram για use case 8[]
 19)sequence diagram για use case 9[]
 20)sequence diagram για use case 10[]
 
 
-
+--------------------------------------------------------------------
 ---------------CODE ROADMAP------------------
 PRIORITY: <---
 
