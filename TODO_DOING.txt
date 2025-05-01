@@ -11,8 +11,8 @@
 10)Robustness diagram για use case 10[X]
 ---------------------------------------------------------------------
 
-11)sequence diagram για use case 1[]<--
-12)sequence diagram για use case 2[]<--
+11)sequence diagram για use case 1[X]<-- diorthothike
+12)sequence diagram για use case 2[]<-- thelei diorthosi
 
 13)sequence diagram για use case 3[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
 14)sequence diagram για use case 4[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
@@ -50,10 +50,10 @@ PRIORITY: <---
 --na rotaei prin to diagrafei[]Βασίλης
 -stay in panel[x]Σωτηρης
 -check and use input[X] <--- Σωτηρης
--snap to other blocks[X] <---Βασίλης
+-snap to other blocks[X] 		<---Βασίλης
 -snap animation ghost block[X]<---Βασίλης
 -unsnap with delay[X] <---Βασίλης
--snapping info stored[X]<---Βασίλης
+-snapping info stored[X]		<---Βασίλης
 
 -----------------------------------------------------
 -code list[X] <---Σωτηρης
@@ -75,20 +75,20 @@ PRIORITY: <---
 -------------
 -------------
 -execute method[]Σωτηρης
---wait timers[]Σωτηρης
+--wait timers[]	<------	Σωτηρης 
 --na xeirizetai math start[X]
---na xeirizetai while kai end while[]
---na xeirizetai if kai end if[]
+--na xeirizetai while kai end while[]<------Σωτηρης
+--na xeirizetai if kai end if[]<--------Σωτηρης
 ---------------------------------------------------
 
 --subclasses for block:
 start[x] <---Σωτηρης
 end[x] <---Σωτηρης
 math block[X] <---Σωτηρης
-if block[]
-end if[]
-while block[]
-end while[]
+if block[]Σωτηρης
+end if[]Σωτηρης
+while block[]Σωτηρης
+end while[]Σωτηρης
 
 -----------------------------------------------------
 
