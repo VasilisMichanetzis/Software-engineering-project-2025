@@ -114,7 +114,7 @@ public class Varpanel extends JPanel {
             }
         }
         VarEntry varentry = new VarEntry(name, intval,index);
-        VarList.setEntry(index, varentry);
+        VarList.setEntry(index, varentry); 
         this.setBackground(Color.BLUE);
         return varentry.toString();
     }

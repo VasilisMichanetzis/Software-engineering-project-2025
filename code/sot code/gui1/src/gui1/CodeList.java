@@ -76,6 +76,7 @@ public class CodeList {
 		     }
 
 	    }
+	    
 	    public static void run(int progcounter) 
 	    {
 
@@ -91,10 +92,19 @@ public class CodeList {
 		                System.out.println(math.execute());
 		            }
 
-		           
+		            CodeList.ProgCounter++;
 
 	    }
 	    
+	    public static void resetborder(int progcounter) 
+	    {
+
+	    	if (progcounter >= blocks.size()) return;
+	    	
+	    		 	Dragpanel block = blocks.get(progcounter);
+		            block.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+
+	    }
 	    
 	    
 	    

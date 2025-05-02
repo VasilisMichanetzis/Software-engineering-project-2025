@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 
 public class Declaration extends JPanel{
@@ -18,6 +20,9 @@ public class Declaration extends JPanel{
 	
 	private Output outpanel;
 
+	private volatile int stopflag = 0; 
+	
+	private JButton runbutton;
 	
 	Declaration(Output outpanel)
 	{
@@ -59,25 +64,78 @@ public class Declaration extends JPanel{
 		this.add(checkbutton);
 		
 		
+		// Progress bar under run button
+		JProgressBar progressBar = new JProgressBar(0, 100);
+		progressBar.setBounds(1000, 120, 100, 20); // under the run button
+		progressBar.setStringPainted(false);
+		progressBar.setVisible(false);
+		this.add(progressBar);
+
+		
+		JButton stopbutton = new JButton();
+		stopbutton.setBounds( 1100, 40, 60, 60);
+		stopbutton.setText("stop");
+		stopbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            stopflag=1;
+            }
+        });
+		this.add(stopbutton);
 		
 		
-		JButton runbutton = new JButton();
+		runbutton = new JButton();
 		runbutton.setBounds( 1000, 20, 100, 100);
 		runbutton.setText("run");
-	    runbutton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	            	CodeList.ProgCounter=0;
-	            	while(CodeList.ProgCounter<=CodeList.ProgMax) {
-	            	//System.out.println("Prog Max = "+CodeList.ProgMax);	
-	            	CodeList.run(CodeList.ProgCounter);
-	            	VarList.printAll();
-	            	outpanel.create_out_elements();
-	            	//System.out.println("Prog Counter = "+CodeList.ProgCounter);
-	            	CodeList.ProgCounter++;
-	            	}
-	            }
-	        });
+		runbutton.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        CodeList.ProgCounter = 0;
+		        int total = CodeList.ProgMax;
+		  
+		        stopflag=0;
+		        runbutton.setEnabled(false);
+		        new Thread(() -> {
+		        	
+		        	progressBar.setVisible(true);
+		            while (CodeList.ProgCounter < total && stopflag==0) {
+		            	
+		            	int prcount = CodeList.ProgCounter;
+		            	
+		            	CodeList.run(CodeList.ProgCounter);
+		                // Simulate delay using progress bar
+		                for (int i = 0; i <= 100; i=i+2) {
+		                    final int val = i;
+		                    SwingUtilities.invokeLater(() -> progressBar.setValue(val));
+		                    try {
+		                        Thread.sleep(20); // controls how fast the bar fills
+		                    } catch (InterruptedException ex) {
+		                        ex.printStackTrace();
+		                    }
+		                }
+
+		                // After bar is full, reset UI elements
+		                SwingUtilities.invokeLater(() -> {
+		                    
+		                    CodeList.resetborder(prcount);
+		                    VarList.printAll();
+		                    outpanel.create_out_elements();
+		                    progressBar.setValue(0); // reset bar
+		                });
+
+		                
+		                try {
+		                    Thread.sleep(10);
+		                } catch (InterruptedException ex) {
+		                    ex.printStackTrace();
+		                }
+		            }
+		            runbutton.setEnabled(true);
+		            progressBar.setVisible(false);
+		        }).start();
+		        
+		    }
+		});
 		
 		runbutton.setVisible(true);
 		this.add(runbutton);
