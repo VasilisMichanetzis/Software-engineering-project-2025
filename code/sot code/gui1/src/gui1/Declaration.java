@@ -108,7 +108,7 @@ public class Declaration extends JPanel{
 		                    final int val = i;
 		                    SwingUtilities.invokeLater(() -> progressBar.setValue(val));
 		                    try {
-		                        Thread.sleep(20); // controls how fast the bar fills
+		                        Thread.sleep(10); // controls how fast the bar fills
 		                    } catch (InterruptedException ex) {
 		                        ex.printStackTrace();
 		                    }

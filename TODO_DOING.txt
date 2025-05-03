@@ -35,8 +35,8 @@ PRIORITY: <---
 -block creator[x]Σωτηρης
 -specific creators for subclasses[]
 --start end math[x]
---if end if[]
---while end while[]
+--if end if[X]
+--while end while[X]
 -declarations[X]Σωτηρης
 -varlist[X]Σωτηρης
 --output[X]Σωτηρης
@@ -45,15 +45,15 @@ PRIORITY: <---
 ---class 'block'---[x]
 -drag and drop[x]Σωτηρης
 -delete[x]Σωτηρης 
--delete ena apo ta block se seira kanei shift ta alla aristera[X]<---Βασίλης
+-delete ena apo ta block se seira kanei shift ta alla aristera[]<---Βασίλης
 
 --na rotaei prin to diagrafei[]Βασίλης
 -stay in panel[x]Σωτηρης
 -check and use input[X] <--- Σωτηρης
--snap to other blocks[X] 		<---Βασίλης
--snap animation ghost block[X]<---Βασίλης
--unsnap with delay[X] <---Βασίλης
--snapping info stored[X]		<---Βασίλης
+-snap to other blocks[] 		<---Βασίλης
+-snap animation ghost block[]<---Βασίλης
+-unsnap with delay[] <---Βασίλης
+-snapping info stored[]		<---Βασίλης
 
 -----------------------------------------------------
 -code list[X] <---Σωτηρης
@@ -68,27 +68,27 @@ PRIORITY: <---
 -compile method[X]Σωτηρης
 --na xeirizetai math start[X]
 
---elegxos teleytaio end[]Σωτηρης
+--elegxos teleytaio end[]Σωτηρης	<---------
 
---na xeirizetai while kai end while[]
---na xeirizetai if kai end if[]
+--na xeirizetai while kai end while[X]
+--na xeirizetai if kai end if[X]
 -------------
 -------------
--execute method[]Σωτηρης
---wait timers[]	<------	Σωτηρης 
+-execute method[X]Σωτηρης
+--wait timers[X]	<------	Σωτηρης 
 --na xeirizetai math start[X]
---na xeirizetai while kai end while[]<------Σωτηρης
---na xeirizetai if kai end if[]<--------Σωτηρης
+--na xeirizetai while kai end while[X]<------Σωτηρης
+--na xeirizetai if kai end if[X]<--------Σωτηρης
 ---------------------------------------------------
 
 --subclasses for block:
 start[x] <---Σωτηρης
 end[x] <---Σωτηρης
 math block[X] <---Σωτηρης
-if block[]Σωτηρης
-end if[]Σωτηρης
-while block[]Σωτηρης
-end while[]Σωτηρης
+if block[X]Σωτηρης
+end if[X]Σωτηρης
+while block[X]Σωτηρης
+end while[X]Σωτηρης
 
 -----------------------------------------------------
 

@@ -58,24 +58,6 @@ public class MathBlock extends Dragpanel{
         pos2Field.setBounds(103, 52, 25, 25);
         this.add(pos2Field);
         
-        //temporary for testing
-        //
-        JButton checkButton = new JButton();
-        //closeButton.setPreferredSize(new Dimension(45, 45));
-        checkButton.setBackground(Color.GREEN);
-        checkButton.setBounds(0, 0, 20, 20);
-        checkButton.setFocusable(false);
-        
-        checkButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkmath();
-                execute();
-            }
-        });
-        
-        this.add(checkButton);
-
         
         
 	}
@@ -94,7 +76,7 @@ public class MathBlock extends Dragpanel{
         	return "error";
         }
         
-        if (!(symbol.contains("+")||symbol.contains("-")||symbol.contains("/")||symbol.contains("*"))) 
+        if (!(symbol.contains("+")||symbol.contains("-")||symbol.contains("/")||symbol.contains("*")||symbol.contains("%"))) 
         {
         	
         	return "error: operation symbol input";
@@ -197,7 +179,10 @@ public class MathBlock extends Dragpanel{
 			{
 				first.value=pos1int*pos2int;
 			}
-			
+			else if (symbol.contentEquals("%")) 
+			{
+				first.value=pos1int%pos2int;
+			}
 			
 		}
 		else if (forth==null) 
@@ -218,7 +203,10 @@ public class MathBlock extends Dragpanel{
 			{
 				first.value=second.value*pos2int;
 			}
-			
+			else if (symbol.contentEquals("%")) 
+			{
+				first.value=second.value%pos2int;
+			}
 			
 		}
 		else if (second==null)
@@ -240,7 +228,10 @@ public class MathBlock extends Dragpanel{
 			{
 				first.value=pos1int*forth.value;
 			}
-
+			else if (symbol.contentEquals("%")) 
+			{
+				first.value=pos1int%forth.value;
+			}
 		}
 		else
 		{
@@ -260,7 +251,10 @@ public class MathBlock extends Dragpanel{
 			{
 				first.value=second.value*forth.value;
 			}
-			
+			else if (symbol.contentEquals("%")) 
+			{
+				first.value=second.value%forth.value;
+			}
 		}
 
 

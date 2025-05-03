@@ -73,6 +73,57 @@ public class Canvas extends JPanel{
 
 	        dragPanelCount++; // Track added panels
 	    }
-	 
+	 public void addIfBlock() {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        IfBlock block = new IfBlock();
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	    }
+	 public void addEndIfBlock() {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        EndIfBlock block = new EndIfBlock();
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	    } 
+	 public void addWhileBlock() {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        WhileBlock block = new WhileBlock();
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	    }
+	 public void addEndWhileBlock() {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        EndWhileBlock block = new EndWhileBlock();
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	    } 
 	 
 }

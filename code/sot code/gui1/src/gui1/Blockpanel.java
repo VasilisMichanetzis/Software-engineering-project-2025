@@ -53,8 +53,41 @@ public class Blockpanel extends JPanel{
 	        });
 		this.add(mathbutton);
 		
+		Blockbutton ifbutton = new Blockbutton(30,150, "If");
+	    ifbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	               codepanel.addIfBlock(); // Call method in MainPanel
+	            }
+	        });
+		this.add(ifbutton);
 		
+		Blockbutton endifbutton = new Blockbutton(30,190, "EndIf");
+	    endifbutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	               codepanel.addEndIfBlock(); // Call method in MainPanel
+	            }
+	        });
+		this.add(endifbutton);
 		
+		Blockbutton whilebutton = new Blockbutton(30,230, "While");
+	    whilebutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	               codepanel.addWhileBlock(); // Call method in MainPanel
+	            }
+	        });
+		this.add(whilebutton);
+		
+		Blockbutton endwhilebutton = new Blockbutton(30,270, "EndWhile");
+	    endwhilebutton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	               codepanel.addEndWhileBlock(); // Call method in MainPanel
+	            }
+	        });
+		this.add(endwhilebutton);
 		
 	}
 	

@@ -63,8 +63,8 @@ public class Dragpanel extends JPanel {
                     	CodeList.clear();
                     	CodeList.lastpanelin=null;
                     	}
-                    if (type.contentEquals("end")) {CodeList.numend=0; CodeList.removeBlock(Dragpanel.this); }
-                    if (type.contentEquals("math")) {CodeList.removeBlock(Dragpanel.this); }
+                    else if (type.contentEquals("end")) {CodeList.numend=0; CodeList.removeBlock(Dragpanel.this); }
+                    else {CodeList.removeBlock(Dragpanel.this); }
                     
                     
                     
