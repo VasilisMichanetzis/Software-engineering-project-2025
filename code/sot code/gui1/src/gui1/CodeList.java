@@ -14,7 +14,7 @@ public class CodeList {
 	public static int ProgCounter=0;
 	public static int ProgMax=0;
 	//temp var for storing last dragpanel to go in list
-	public static Dragpanel lastpanelin;
+	//public static Dragpanel lastpanelin;
 	
 	
 

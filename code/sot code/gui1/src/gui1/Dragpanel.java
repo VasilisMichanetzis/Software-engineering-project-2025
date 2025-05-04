@@ -1,179 +1,213 @@
 package gui1;
 
 import javax.swing.*;
-
-//import gui1.Dragpanel;
-//import gui1.GhostPanelPreview;
-//import gui1.SnapManager;
-//import gui1.SnapResult;
-
 import java.awt.*;
 import java.awt.event.*;
-
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dragpanel extends JPanel {
-    
-
-	private int mouseX, mouseY;
-    
+    private int mouseX, mouseY;
+    // screen coords when snapped
+    private int snapScreenX, snapScreenY;
     public String type;
-    
-    private final int SNAP_THRESHOLD = 20;
-    private final int UNSNAP_DISTANCE = 120;
-    // Snap state: 0 = not snapped, 1 = snapped (right edge), -1 = snapped (left edge)
-    private int snapState = 0;
-    // Record the x-coordinate when snapping occurred.
-    private int snapReferenceX = 0;
-    // Locked y coordinate when snapped.
-    private int lockedY = -1;
-    private GhostPanelPreview ghostPreview = new GhostPanelPreview();
-    
-    
-    Dragpanel() 
-    {
 
-        this.setBackground(Color.BLUE);
-        this.setPreferredSize(new Dimension(200, 100));
-        this.setBounds(100, 150, 210, 90); // Initial position inside the container panel
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+    private static final int SNAP_THRESHOLD = 40;
+    private static final int UNSNAP_DISTANCE = 100;
+    private boolean snapped = false;
 
-        this.setLayout(null);
+    // Ghost preview panel
+    private final JPanel ghostPanel;
 
+    public Dragpanel() {
+        setBackground(Color.BLUE);
+        setPreferredSize(new Dimension(200, 100));
+        setBounds(100, 150, 210, 90);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+        setLayout(null);
+
+        ghostPanel = new JPanel();
+        ghostPanel.setBackground(new Color(0, 0, 0, 100)); // stronger preview
+        ghostPanel.setOpaque(true);
+        ghostPanel.setVisible(false);
+
+        // CLOSE BUTTON: removes this panel and re-snaps the successor
         JButton closeButton = new JButton("X");
-        closeButton.setPreferredSize(new Dimension(45, 45));
-        closeButton.setFont(new Font("Arial", Font.BOLD, 7));
-        closeButton.setBounds(85, 3, 40, 40); // Position inside the panel
+        closeButton.setBounds(85, 3, 40, 40);
         closeButton.setFocusable(false);
-        
+        closeButton.setFont(new Font("Arial", Font.BOLD, 7));
+        closeButton.addActionListener(e -> {
+            Container parent = getParent();
+            if (parent == null) return;
 
-        closeButton.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Container parent = getParent();
-                if (parent != null) {
-                    parent.remove(Dragpanel.this); // Remove itself from canvas
-                    parent.revalidate();  
-                    parent.repaint();
-                    
-                    if (type.contentEquals("start")) 
-                    	{
-                    	CodeList.numstart=0; 
-                    	CodeList.clear();
-                    	CodeList.lastpanelin=null;
-                    	}
-                    else if (type.contentEquals("end")) {CodeList.numend=0; CodeList.removeBlock(Dragpanel.this); }
-                    else {CodeList.removeBlock(Dragpanel.this); }
-                    
-                    
-                    
+            // 1) Snapshot sequence before removal
+            List<Dragpanel> before = new ArrayList<>(CodeList.getBlocks());
+            int removedIndex = before.indexOf(Dragpanel.this);
+
+            // 2) Remove from GUI
+            parent.remove(ghostPanel);
+            parent.remove(Dragpanel.this);
+            parent.revalidate();
+            parent.repaint();
+
+            // 3) Remove from CodeList
+            if ("start".equals(type)) {
+                CodeList.numstart = 0;
+                CodeList.clear();
+            } else if ("end".equals(type)) {
+                CodeList.numend = 0;
+                CodeList.removeBlock(Dragpanel.this);
+            } else {
+                CodeList.removeBlock(Dragpanel.this);
+            }
+
+            // 4) Snap the *next* block (if any) to the *previous* one
+            List<Dragpanel> after = CodeList.getBlocks();
+            if (removedIndex >= 0 && removedIndex < after.size()) {
+                // the block that followed the removed one
+                Dragpanel next = after.get(removedIndex);
+
+                // its new predecessor in the list
+                int predIndex = removedIndex - 1;
+                if (predIndex >= 0) {
+                    Dragpanel prev = after.get(predIndex);
+                    next.setLocation(prev.getX() + prev.getWidth(), prev.getY());
                 }
+                // if predIndex < 0, next stays where it is (it’s now the new first block)
             }
         });
+        add(closeButton);
 
-        this.add(closeButton); // Add delete button to panel
-        
-        //temp button for adding dragpanels to codelist
-        
-        
-        JButton addtolist = new JButton();
-        addtolist.setBounds(50, 0, 20, 20); // Position inside the panel
-        addtolist.setFocusable(false);
-        
-        addtolist.addActionListener(new ActionListener() 
-        {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               if(CodeList.lastpanelin!=null) 
-               {
-            	   CodeList.insertRightOf(CodeList.lastpanelin,Dragpanel.this);
-            	   CodeList.lastpanelin=Dragpanel.this;
-               }
-            	
-            	
-            }
-        });
-        
-        
-        this.add(addtolist);
-        
-        //------------------------------------------------
-
-        // Mouse listener for dragging
-        this.addMouseListener(new MouseAdapter() {
+        // Mouse listener: track press & release for snap/unsnap
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mouseX = e.getX();
                 mouseY = e.getY();
+                Container parent = getParent();
+                if (parent != null) {
+                    parent.remove(ghostPanel);
+                    parent.revalidate();
+                    parent.repaint();
+                }
+                if (snapped) {
+                    snapScreenX = e.getXOnScreen();
+                    snapScreenY = e.getYOnScreen();
+                }
             }
+
             @Override
             public void mouseReleased(MouseEvent e) {
-                SnapResult result = SnapManager.calculateSnap(Dragpanel.this, getParent(), getX(), getY(), SNAP_THRESHOLD);
-                if (result.isSnapped()) {
-                    snapState = result.getSnapState();
-                    snapReferenceX = result.getSnapX();
-                    lockedY = result.getSnapY(); // Lock y to neighbor's y.
-                    setLocation(snapReferenceX, lockedY);
-                    
+                Container parent = getParent();
+                if (parent == null) return;
+                parent.remove(ghostPanel);
+                if (!snapped) {
+                    for (Component comp : parent.getComponents()) {
+                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this) 
+                            continue;
+                        Dragpanel other = (Dragpanel) comp;
+                        int dx, dy;
+
+                        if (Dragpanel.this instanceof StartBlock) {
+                            dx = Math.abs((getX() + getWidth()) - other.getX());
+                            dy = Math.abs(getY() - other.getY());
+                            if (dx <= SNAP_THRESHOLD && dy <= SNAP_THRESHOLD) {
+                                setLocation(other.getX() - getWidth(), other.getY());
+                                CodeList.insertRightOf(other, Dragpanel.this);
+                                snapped = true;
+                                snapScreenX = e.getXOnScreen();
+                                snapScreenY = e.getYOnScreen();
+                                break;
+                            }
+                        } else {
+                            dx = Math.abs(getX() - (other.getX() + other.getWidth()));
+                            dy = Math.abs(getY() - other.getY());
+                            if (dx <= SNAP_THRESHOLD && dy <= SNAP_THRESHOLD) {
+                                setLocation(other.getX() + other.getWidth(), other.getY());
+                                CodeList.insertRightOf(other, Dragpanel.this);
+                                snapped = true;
+                                snapScreenX = e.getXOnScreen();
+                                snapScreenY = e.getYOnScreen();
+                                break;
+                            }
+                        }
+                    }
                 }
-                ghostPreview.remove(getParent());
+                parent.revalidate();
+                parent.repaint();
             }
         });
 
-        this.addMouseMotionListener(new MouseMotionAdapter() {
+        // Mouse motion listener: drag with unsnap resistance and ghost preview
+        addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                if (getParent() == null) return; // Safety check
+                Container parent = getParent();
+                if (parent == null) return;
 
-                // Calculate new position
-                int newX = getX() + e.getX() - mouseX;
-                int newY = getY() + e.getY() - mouseY;
-                if(snapState != 0 && lockedY != -1) {
-                    newY = lockedY;
+                // if snapped, require dragging beyond threshold to unsnap
+                if (snapped) {
+                    int dx = e.getXOnScreen() - snapScreenX;
+                    int dy = e.getYOnScreen() - snapScreenY;
+                    if (Math.hypot(dx, dy) < UNSNAP_DISTANCE) {
+                        return; // remain snapped
+                    }
+                    snapped = false;
+                    mouseX = e.getX();
+                    mouseY = e.getY();
                 }
-                
-                if(snapState == 1) {
-                    if(newX < snapReferenceX - UNSNAP_DISTANCE) {
-                        snapState = 0;
-                        lockedY = -1;
-                    } else {
-                        newX = snapReferenceX;
-                    }
-                } else if(snapState == -1) {
-                    if(newX > snapReferenceX + UNSNAP_DISTANCE) {
-                        snapState = 0;
-                        lockedY = -1;
-                    } else {
-                        newX = snapReferenceX;
+
+                // calculate new candidate position
+                int candX = getX() + e.getX() - mouseX;
+                int candY = getY() + e.getY() - mouseY;
+
+                // ghost preview only when not snapped
+                int ghostX = -1, ghostY = -1;
+                if (!snapped) {
+                    for (Component comp : parent.getComponents()) {
+                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this) 
+                            continue;
+                        Dragpanel other = (Dragpanel) comp;
+                        int dx2, dy2;
+                        if (Dragpanel.this instanceof StartBlock) {
+                            dx2 = Math.abs((candX + getWidth()) - other.getX());
+                            dy2 = Math.abs(candY - other.getY());
+                            if (dx2 <= SNAP_THRESHOLD && dy2 <= SNAP_THRESHOLD) {
+                                ghostX = other.getX() - getWidth();
+                                ghostY = other.getY();
+                                break;
+                            }
+                        } else {
+                            dx2 = Math.abs(candX - (other.getX() + other.getWidth()));
+                            dy2 = Math.abs(candY - other.getY());
+                            if (dx2 <= SNAP_THRESHOLD && dy2 <= SNAP_THRESHOLD) {
+                                ghostX = other.getX() + other.getWidth();
+                                ghostY = other.getY();
+                                break;
+                            }
+                        }
                     }
                 }
-                
-                if(snapState == 0) {
-                    SnapResult ghostResult = SnapManager.calculateSnap(Dragpanel.this, getParent(), newX, newY, SNAP_THRESHOLD);
-                    if(ghostResult.isSnapped()) {
-                        int ghostX = ghostResult.getSnapX();
-                        int ghostY = ghostResult.getSnapY();
-                        int dragZ = getParent().getComponentZOrder(Dragpanel.this);
-                        ghostPreview.update(getParent(), ghostX, ghostY, getWidth(), getHeight(), dragZ + 1);
-                    } else {
-                        ghostPreview.remove(getParent());
-                    }
+                if (ghostX >= 0) {
+                    ghostPanel.setBounds(ghostX, ghostY, getWidth(), getHeight());
+                    if (ghostPanel.getParent() != parent) 
+                        parent.add(ghostPanel);
+                    parent.setComponentZOrder(ghostPanel, parent.getComponentCount() - 1);
+                    ghostPanel.setVisible(true);
                 } else {
-                    ghostPreview.remove(getParent());
+                    ghostPanel.setVisible(false);
+                    parent.remove(ghostPanel);
                 }
 
-                // Keep inside the parent panel (ContainerPanel)
-                int maxX = getParent().getWidth() - getWidth();
-                int maxY = getParent().getHeight() - getHeight();
-
-                newX = Math.max(0, Math.min(newX, maxX));
-                newY = Math.max(0, Math.min(newY, maxY));
-
-                setLocation(newX, newY);
+                // clamp and move
+                int maxX = parent.getWidth() - getWidth();
+                int maxY = parent.getHeight() - getHeight();
+                candX = Math.max(0, Math.min(candX, maxX));
+                candY = Math.max(0, Math.min(candY, maxY));
+                setLocation(candX, candY);
+                parent.revalidate();
+                parent.repaint();
             }
         });
-        
-        
     }
 }
