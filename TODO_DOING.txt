@@ -17,8 +17,8 @@
 13)sequence diagram για use case 3[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
 14)sequence diagram για use case 4[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
 
-15)sequence diagram για use case 5[]<--
-16)sequence diagram για use case 6[]<--
+15)sequence diagram για use case 5[]<--mike
+16)sequence diagram για use case 6[]<--mike
 17)sequence diagram για use case 7[]
 18)sequence diagram για use case 8[X] (και το redo μαζι)
 19)sequence diagram για use case 9[Χ]
