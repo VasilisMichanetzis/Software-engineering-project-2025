@@ -8,15 +8,13 @@ import java.util.List;
 
 public class Dragpanel extends JPanel {
     private int mouseX, mouseY;
-    // screen coords when snapped
     private int snapScreenX, snapScreenY;
     public String type;
 
-    private static final int SNAP_THRESHOLD = 40;
+    private static final int SNAP_THRESHOLD  = 40;
     private static final int UNSNAP_DISTANCE = 100;
     private boolean snapped = false;
 
-    // Ghost preview panel
     private final JPanel ghostPanel;
 
     public Dragpanel() {
@@ -27,11 +25,11 @@ public class Dragpanel extends JPanel {
         setLayout(null);
 
         ghostPanel = new JPanel();
-        ghostPanel.setBackground(new Color(0, 0, 0, 100)); // stronger preview
+        ghostPanel.setBackground(new Color(0, 0, 0, 100));
         ghostPanel.setOpaque(true);
         ghostPanel.setVisible(false);
 
-        // CLOSE BUTTON: removes this panel and re-snaps the successor
+        // CLOSE BUTTON: remove + shift ALL successors
         JButton closeButton = new JButton("X");
         closeButton.setBounds(85, 3, 40, 40);
         closeButton.setFocusable(false);
@@ -40,55 +38,50 @@ public class Dragpanel extends JPanel {
             Container parent = getParent();
             if (parent == null) return;
 
-            // 1) Snapshot sequence before removal
+            // 1) Snapshot before removal
             List<Dragpanel> before = new ArrayList<>(CodeList.getBlocks());
-            int removedIndex = before.indexOf(Dragpanel.this);
+            int removedIndex = before.indexOf(this);
 
             // 2) Remove from GUI
             parent.remove(ghostPanel);
-            parent.remove(Dragpanel.this);
+            parent.remove(this);
             parent.revalidate();
             parent.repaint();
 
-            // 3) Remove from CodeList
+            // 3) Remove from model
             if ("start".equals(type)) {
                 CodeList.numstart = 0;
                 CodeList.clear();
             } else if ("end".equals(type)) {
                 CodeList.numend = 0;
-                CodeList.removeBlock(Dragpanel.this);
+                CodeList.removeBlock(this);
             } else {
-                CodeList.removeBlock(Dragpanel.this);
+                CodeList.removeBlock(this);
             }
 
-            // 4) Snap the *next* block (if any) to the *previous* one
+            // 4) Shift ALL successors to close the gap
             List<Dragpanel> after = CodeList.getBlocks();
-            if (removedIndex >= 0 && removedIndex < after.size()) {
-                // the block that followed the removed one
-                Dragpanel next = after.get(removedIndex);
-
-                // its new predecessor in the list
-                int predIndex = removedIndex - 1;
-                if (predIndex >= 0) {
-                    Dragpanel prev = after.get(predIndex);
-                    next.setLocation(prev.getX() + prev.getWidth(), prev.getY());
-                }
-                // if predIndex < 0, next stays where it is (it’s now the new first block)
+            // start shifting at either removedIndex or 1, whichever is larger
+            int start = Math.max(removedIndex, 1);
+            for (int i = start; i < after.size(); i++) {
+                Dragpanel pred = after.get(i - 1);
+                Dragpanel curr = after.get(i);
+                curr.setLocation(pred.getX() + pred.getWidth(), pred.getY());
             }
         });
         add(closeButton);
 
-        // Mouse listener: track press & release for snap/unsnap
+        // MOUSE LISTENER: record origin, clear ghost
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 mouseX = e.getX();
                 mouseY = e.getY();
-                Container parent = getParent();
-                if (parent != null) {
-                    parent.remove(ghostPanel);
-                    parent.revalidate();
-                    parent.repaint();
+                Container p = getParent();
+                if (p != null) {
+                    p.remove(ghostPanel);
+                    p.revalidate();
+                    p.repaint();
                 }
                 if (snapped) {
                     snapScreenX = e.getXOnScreen();
@@ -101,13 +94,14 @@ public class Dragpanel extends JPanel {
                 Container parent = getParent();
                 if (parent == null) return;
                 parent.remove(ghostPanel);
+
                 if (!snapped) {
+                    // existing snap-to-right logic
                     for (Component comp : parent.getComponents()) {
-                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this) 
+                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this)
                             continue;
                         Dragpanel other = (Dragpanel) comp;
                         int dx, dy;
-
                         if (Dragpanel.this instanceof StartBlock) {
                             dx = Math.abs((getX() + getWidth()) - other.getX());
                             dy = Math.abs(getY() - other.getY());
@@ -138,35 +132,52 @@ public class Dragpanel extends JPanel {
             }
         });
 
-        // Mouse motion listener: drag with unsnap resistance and ghost preview
+        // MOUSE MOTION: handle drag, unsnap & shift ALL successors, ghost preview
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Container parent = getParent();
                 if (parent == null) return;
 
-                // if snapped, require dragging beyond threshold to unsnap
+                // UNSNAP logic: if dragged far enough, unsnap + shift ALL successors
                 if (snapped) {
                     int dx = e.getXOnScreen() - snapScreenX;
                     int dy = e.getYOnScreen() - snapScreenY;
-                    if (Math.hypot(dx, dy) < UNSNAP_DISTANCE) {
-                        return; // remain snapped
+                    if (Math.hypot(dx, dy) >= UNSNAP_DISTANCE) {
+                        // snapshot
+                        List<Dragpanel> before = new ArrayList<>(CodeList.getBlocks());
+                        int removedIndex = before.indexOf(Dragpanel.this);
+
+                        // remove from model
+                        CodeList.removeBlock(Dragpanel.this);
+
+                        // shift ALL successors
+                        List<Dragpanel> after = CodeList.getBlocks();
+                        int start = Math.max(removedIndex, 1);
+                        for (int i = start; i < after.size(); i++) {
+                            Dragpanel pred = after.get(i - 1);
+                            Dragpanel curr = after.get(i);
+                            curr.setLocation(pred.getX() + pred.getWidth(), pred.getY());
+                        }
+
+                        snapped = false;
+                        mouseX = e.getX();
+                        mouseY = e.getY();
+                    } else {
+                        // still snapped: don’t move
+                        return;
                     }
-                    snapped = false;
-                    mouseX = e.getX();
-                    mouseY = e.getY();
                 }
 
-                // calculate new candidate position
+                // compute candidate position
                 int candX = getX() + e.getX() - mouseX;
                 int candY = getY() + e.getY() - mouseY;
 
-                // ghost preview only when not snapped
+                // ghost-preview logic 
                 int ghostX = -1, ghostY = -1;
                 if (!snapped) {
                     for (Component comp : parent.getComponents()) {
-                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this) 
-                            continue;
+                        if (!(comp instanceof Dragpanel) || comp == Dragpanel.this) continue;
                         Dragpanel other = (Dragpanel) comp;
                         int dx2, dy2;
                         if (Dragpanel.this instanceof StartBlock) {
@@ -190,8 +201,7 @@ public class Dragpanel extends JPanel {
                 }
                 if (ghostX >= 0) {
                     ghostPanel.setBounds(ghostX, ghostY, getWidth(), getHeight());
-                    if (ghostPanel.getParent() != parent) 
-                        parent.add(ghostPanel);
+                    if (ghostPanel.getParent() != parent) parent.add(ghostPanel);
                     parent.setComponentZOrder(ghostPanel, parent.getComponentCount() - 1);
                     ghostPanel.setVisible(true);
                 } else {
@@ -199,7 +209,7 @@ public class Dragpanel extends JPanel {
                     parent.remove(ghostPanel);
                 }
 
-                // clamp and move
+                // clamp & move
                 int maxX = parent.getWidth() - getWidth();
                 int maxY = parent.getHeight() - getHeight();
                 candX = Math.max(0, Math.min(candX, maxX));
