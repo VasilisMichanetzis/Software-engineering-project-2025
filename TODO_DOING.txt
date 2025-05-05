@@ -14,15 +14,15 @@
 11)sequence diagram για use case 1[X]<-- diorthothike
 12)sequence diagram για use case 2[]<-- thelei diorthosi
 
-13)sequence diagram για use case 3[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
-14)sequence diagram για use case 4[](<-- se ligo gia na exoyme kai xeirismo allon typon block)
+13)sequence diagram για use case 3[X]
+14)sequence diagram για use case 4[] run
 
 15)sequence diagram για use case 5[]<--mike
 16)sequence diagram για use case 6[]<--mike
-17)sequence diagram για use case 7[]
+17)sequence diagram για use case 7[] save
 18)sequence diagram για use case 8[X] (και το redo μαζι)
 19)sequence diagram για use case 9[Χ]
-20)sequence diagram για use case 10[]
+20)sequence diagram για use case 10[] debug
 
 
 --------------------------------------------------------------------
@@ -45,15 +45,15 @@ PRIORITY: <---
 ---class 'block'---[x]
 -drag and drop[x]Σωτηρης
 -delete[x]Σωτηρης 
--delete ena apo ta block se seira kanei shift ta alla aristera[]<---Βασίλης
+-delete ena apo ta block se seira kanei shift ta alla aristera[X]<---Βασίλης
 
 --na rotaei prin to diagrafei[]Βασίλης
 -stay in panel[x]Σωτηρης
 -check and use input[X] <--- Σωτηρης
--snap to other blocks[] 		<---Βασίλης
--snap animation ghost block[]<---Βασίλης
--unsnap with delay[] <---Βασίλης
--snapping info stored[]		<---Βασίλης
+-snap to other blocks[X] 		<---Βασίλης
+-snap animation ghost block[X]<---Βασίλης
+-unsnap with delay[X] <---Βασίλης
+-snapping info stored[X]		<---Βασίλης
 
 -----------------------------------------------------
 -code list[X] <---Σωτηρης
@@ -61,8 +61,8 @@ PRIORITY: <---
 -deletion on erase start block[X]
 -----------
 -----------
--add block on snap[]<-Βασίλης
--delete from list on block deletion or unsnapping[]<-Βασίλης
+-add block on snap[X]<-Βασίλης
+-delete from list on block deletion or unsnapping[X]<-Βασίλης
 -----------
 -----------
 -compile method[X]Σωτηρης
