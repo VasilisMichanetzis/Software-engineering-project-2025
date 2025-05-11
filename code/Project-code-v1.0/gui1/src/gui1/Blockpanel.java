@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 
@@ -88,6 +89,34 @@ public class Blockpanel extends JPanel{
 	            }
 	        });
 		this.add(endwhilebutton);
+		
+		Blockbutton funcbutton = new Blockbutton(30, 310, "Function");
+		funcbutton.addActionListener(new ActionListener() {
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        // Check if a function has already been created
+		        if (FuncList.funccreated != 0) {
+		            // Show a popup if a function has already been created
+		            JOptionPane.showMessageDialog(null, 
+		                "A function has already been created. Only one function can be created at a time.",
+		                "Function Error", 
+		                JOptionPane.ERROR_MESSAGE);
+		        } else {
+		            // Show popup dialog to ask for function name
+		            String funcName = JOptionPane.showInputDialog(null, 
+		                    "Enter Function Name:", 
+		                    "Function Name", 
+		                    JOptionPane.PLAIN_MESSAGE);
+
+		            // Check if user pressed OK and entered a name (not canceled or left empty)
+		            if (funcName != null && !funcName.trim().isEmpty()) {
+		                codepanel.createFuncTriplet(funcName);
+		            }
+		        }
+		    }
+		});
+		this.add(funcbutton);
+		
 		
 	}
 	

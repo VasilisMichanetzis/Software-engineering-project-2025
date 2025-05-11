@@ -125,5 +125,51 @@ public class Canvas extends JPanel{
 
 	        dragPanelCount++; // Track added panels
 	    } 
-	 
+	 public void addCallFuncBlock(String name, StartFuncBlock startf, EndFuncBlock endf) {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        CallFuncBlock block = new CallFuncBlock(name,startf,endf);
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	    } 
+	 public StartFuncBlock addStartFuncBlock(String name) {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        StartFuncBlock block = new StartFuncBlock(name);
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+	        
+	        FuncList.addStartBlock(block);
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	        return block;
+	    } 
+	 public EndFuncBlock addEndFuncBlock(String name) {
+
+		 if (dragPanelCount == 5) {dragPanelCount=0;}
+		 
+	        EndFuncBlock block = new EndFuncBlock(name);
+	        block.setBounds(20 + (dragPanelCount * 20), 20 + (dragPanelCount * 20), 130, 90); // Staggered positions
+
+	        this.add(block);
+	        this.revalidate();
+	        this.repaint();
+
+	        dragPanelCount++; // Track added panels
+	        return block;
+	    } 
+	 public void createFuncTriplet(String name) 
+	 {		
+		 FuncList.funccreated=1;
+		 addCallFuncBlock(name, addStartFuncBlock(name), addEndFuncBlock(name));
+	 }
 }

@@ -6,10 +6,10 @@ import java.util.Stack;
 
 import javax.swing.BorderFactory;
 
-public class CodeList {
+public class FuncList {
 
-	public static int numstart=0;
-	public static int numend=0;
+	public static int funccreated=0;
+	
 	
 	public static int ProgCounter=0;
 	public static int ProgMax=0;
@@ -21,7 +21,7 @@ public class CodeList {
 
 	    // Add a Start block to the beginning if none exists
 	    public static void addStartBlock(Dragpanel startBlock) {
-	        if (blocks.isEmpty() || !(blocks.get(0).type != null && blocks.get(0).type.equals("start"))) {
+	        if (blocks.isEmpty() || !(blocks.get(0).type != null && blocks.get(0).type.equals("startfunc"))) {
 	            blocks.add(0, startBlock);
 	            IsCompiled=0;
 	            ProgMax=1;
@@ -41,7 +41,10 @@ public class CodeList {
 	            ProgMax++;
 	        }
 	    }
-
+	    
+	    public static boolean contains(Dragpanel block) {
+	        return blocks.contains(block);
+	    }
 	    // Remove a block and shift remaining to the left
 	    public static void removeBlock(Dragpanel block) {
 	        blocks.remove(block);
@@ -49,9 +52,6 @@ public class CodeList {
 	        ProgMax--;
 	    }
 
-	    public static boolean contains(Dragpanel block) {
-	        return blocks.contains(block);
-	    }
 	    // Debug helper: print list
 	    public static void printList() {
 	        for (int i = 0; i < blocks.size(); i++) {
@@ -82,12 +82,11 @@ public class CodeList {
 	    	 Dragpanel end = blocks.get(blocks.size()-1);
 	    	 Dragpanel start = blocks.get(0);
 	    	 
-	    	 start.setBackground(Color.green);
-	         if (!end.type.equals("end")) {
+	    	 start.setBackground(Color.yellow);
+	         if (!end.type.equals("endfunc")) {
 	        	 start.setBackground(Color.red);
-	        	 CodeList.CompError=1;
+	        	 FuncList.CompError=1;
 	         }
-	    	 
 	    	 
 	    	 for (int i = 0; i < blocks.size(); i++) 
 	    	 {
@@ -125,13 +124,6 @@ public class CodeList {
 		                if (localcomperror==1) {CompError=localcomperror;}
 		                whileStack.push(i); // Store the index of the "while" block
 		                
-		            }
-		            else if (block.type != null && block.type.equals("callfunc") && block instanceof CallFuncBlock) {
-		            	CallFuncBlock funcblock = (CallFuncBlock) block;
-		                funcblock.setBackground(Color.yellow);
-		                localcomperror=funcblock.checkfunc();
-		                if (localcomperror==1) {CompError=localcomperror;}
-  
 		            }
 		            else if (block.type != null && block.type.equals("endwhile") && block instanceof EndWhileBlock) {
 		                EndWhileBlock endwhileblock = (EndWhileBlock) block;
@@ -176,56 +168,42 @@ public class CodeList {
 		                MathBlock math = (MathBlock) block;
 		                System.out.println(math.execute());
 		                
-		                CodeList.ProgCounter++;
+		                FuncList.ProgCounter++;
 		            }
 		            else if("if".equals(block.type) && block instanceof IfBlock) {
 		            	
 		            	IfBlock ifblock = (IfBlock) block;
 		            	int ifres;
 		                ifres=ifblock.execute();
-		                if(ifres==1) {CodeList.ProgCounter++;}
-		                else {CodeList.ProgCounter = ifblock.endifpos+1;}
+		                if(ifres==1) {FuncList.ProgCounter++;}
+		                else {FuncList.ProgCounter = ifblock.endifpos+1;}
 		            }
 		            else if("while".equals(block.type) && block instanceof WhileBlock) {
 		            	
 		            	WhileBlock whileblock = (WhileBlock) block;
 		            	int whileres;
 		                whileres=whileblock.execute();
-		                if(whileres==1) {CodeList.ProgCounter++;}
-		                else {CodeList.ProgCounter = whileblock.endwhilepos+1;}
+		                if(whileres==1) {FuncList.ProgCounter++;}
+		                else {FuncList.ProgCounter = whileblock.endwhilepos+1;}
 		            }
 		            else if("endwhile".equals(block.type) && block instanceof EndWhileBlock) {
 		            	
 		            	EndWhileBlock endwhileblock = (EndWhileBlock) block;
 		            	
-		                CodeList.ProgCounter = endwhileblock.whilepos;
-		            }
-		            else if("callfunc".equals(block.type) && block instanceof CallFuncBlock) {
-		            	
-		            	CallFuncBlock funcblock = (CallFuncBlock) block;
-		            	
-		                funcblock.execute();
-		               
-		                CodeList.ProgCounter++;
-		                
+		                FuncList.ProgCounter = endwhileblock.whilepos;
 		            }
 		            else {
-		            	CodeList.ProgCounter++;
+		            	FuncList.ProgCounter++;
 		            }
 		           
 
 	    }
 	    
-	    public static void resetborder(int progcounter) 
-	    {
-
-	    	if (progcounter >= blocks.size()) return;
-	    	
-	    		 	Dragpanel block = blocks.get(progcounter);
-		            block.setBorder(BorderFactory.createLineBorder(Color.black, 3));
-
+	    public static void resetAllBorders() {
+	        for (Dragpanel block : blocks) {
+	            block.setBorder(BorderFactory.createLineBorder(Color.black, 3));
+	        }
 	    }
-	    
 	    
 	    
 	}

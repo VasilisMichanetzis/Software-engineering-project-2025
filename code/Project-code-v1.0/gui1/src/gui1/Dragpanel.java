@@ -49,13 +49,38 @@ public class Dragpanel extends JPanel {
             parent.repaint();
 
             // 3) Remove from model
-            if ("start".equals(type)) {
+            if ("start".equals(type)) 
+            {
                 CodeList.numstart = 0;
                 CodeList.clear();
-            } else if ("end".equals(type)) {
+            } 
+            else if ("callfunc".equals(type)) 
+            {
+                CodeList.removeBlock(this);  // Optionally remove from your model (CodeList)
+                //cast this to CallFuncBlock and access the attributes
+                if (this instanceof CallFuncBlock) {
+                    CallFuncBlock callFuncBlock = (CallFuncBlock) this;
+                    StartFuncBlock startf = callFuncBlock.getStartf();
+                    EndFuncBlock endf = callFuncBlock.getEndf();
+
+                    // Check if startf and endf are not null, and then remove them
+                    if (startf != null) {
+                        parent.remove(startf);    // Remove StartFuncBlock from the container
+                    }
+                    if (endf != null) {
+                        parent.remove(endf);      // Remove EndFuncBlock from the container
+                    }
+                }
+                FuncList.clear();
+                FuncList.funccreated=0;
+            }
+            else if ("end".equals(type)) 
+            {
                 CodeList.numend = 0;
                 CodeList.removeBlock(this);
-            } else {
+            } 
+            else 
+            {
                 CodeList.removeBlock(this);
             }
 
@@ -69,8 +94,11 @@ public class Dragpanel extends JPanel {
                 curr.setLocation(pred.getX() + pred.getWidth(), pred.getY());
             }
         });
-        add(closeButton);
-
+        //add(closeButton);
+        
+        if(type!="startfunc" && type!="endfunc") {add(closeButton);}
+        
+        
         // MOUSE LISTENER: record origin, clear ghost
         addMouseListener(new MouseAdapter() {
             @Override
@@ -107,7 +135,15 @@ public class Dragpanel extends JPanel {
                             dy = Math.abs(getY() - other.getY());
                             if (dx <= SNAP_THRESHOLD && dy <= SNAP_THRESHOLD) {
                                 setLocation(other.getX() - getWidth(), other.getY());
-                                CodeList.insertRightOf(other, Dragpanel.this);
+                                
+                                //check if other is in codelist or funclist
+                                
+                                if (CodeList.contains(other)) {
+                                    CodeList.insertRightOf(other, Dragpanel.this);
+                                } else if (FuncList.contains(other)) {
+                                    FuncList.insertRightOf(other, Dragpanel.this);
+                                }
+                                
                                 snapped = true;
                                 snapScreenX = e.getXOnScreen();
                                 snapScreenY = e.getYOnScreen();
@@ -118,7 +154,13 @@ public class Dragpanel extends JPanel {
                             dy = Math.abs(getY() - other.getY());
                             if (dx <= SNAP_THRESHOLD && dy <= SNAP_THRESHOLD) {
                                 setLocation(other.getX() + other.getWidth(), other.getY());
-                                CodeList.insertRightOf(other, Dragpanel.this);
+                                
+                                if (CodeList.contains(other)) {
+                                    CodeList.insertRightOf(other, Dragpanel.this);
+                                } else if (FuncList.contains(other)) {
+                                    FuncList.insertRightOf(other, Dragpanel.this);
+                                }
+                                
                                 snapped = true;
                                 snapScreenX = e.getXOnScreen();
                                 snapScreenY = e.getYOnScreen();
