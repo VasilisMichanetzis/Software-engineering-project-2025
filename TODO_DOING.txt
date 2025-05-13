@@ -15,7 +15,7 @@
 12)sequence diagram για use case 2[]<-- thelei diorthosi
 
 13)sequence diagram για use case 3[X]
-14)sequence diagram για use case 4[] run
+14)sequence diagram για use case 4[Χ] run
 
 15)sequence diagram για use case 5[]<--mike
 16)sequence diagram για use case 6[]<--mike
@@ -68,7 +68,7 @@ PRIORITY: <---
 -compile method[X]Σωτηρης
 --na xeirizetai math start[X]
 
---elegxos teleytaio end[]Σωτηρης	<---------
+--elegxos teleytaio end[Χ]Σωτηρης	<---------
 
 --na xeirizetai while kai end while[X]
 --na xeirizetai if kai end if[X]
@@ -90,13 +90,13 @@ end if[X]Σωτηρης
 while block[X]Σωτηρης
 end while[X]Σωτηρης
 
-check on writing [] <--Σωτηρης
+check on writing [Χ] <--Σωτηρης
 
 -----------------------------------------------------
 
 
 -debug mode[]
--function[]
+-function[Χ]
 
 -undo/redo[]
 -save[]
