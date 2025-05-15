@@ -142,6 +142,7 @@ public class FuncList {
 	    		    int unmatchedIf = ifStack.pop();
 	    		    IfBlock ifblock = (IfBlock) blocks.get(unmatchedIf);
 	    		    System.err.println("Unmatched if at index " + unmatchedIf);
+	    		    FuncList.CompError=1;
 	    		    ifblock.setBackground(Color.RED); 
 	    		}
 	    	 //make whiles not matched with their endwhiles red
@@ -149,6 +150,7 @@ public class FuncList {
 	    		    int unmatchedWhile = whileStack.pop();
 	    		    WhileBlock whileblock = (WhileBlock) blocks.get(unmatchedWhile);
 	    		    System.err.println("Unmatched if at index " + unmatchedWhile);
+	    		    FuncList.CompError=1;
 	    		    whileblock.setBackground(Color.RED); 
 	    		}
 

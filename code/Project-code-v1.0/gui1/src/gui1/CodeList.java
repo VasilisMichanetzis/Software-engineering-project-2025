@@ -150,6 +150,7 @@ public class CodeList {
 	    		    int unmatchedIf = ifStack.pop();
 	    		    IfBlock ifblock = (IfBlock) blocks.get(unmatchedIf);
 	    		    System.err.println("Unmatched if at index " + unmatchedIf);
+	    		    CodeList.CompError=1;
 	    		    ifblock.setBackground(Color.RED); 
 	    		}
 	    	 //make whiles not matched with their endwhiles red
@@ -157,6 +158,7 @@ public class CodeList {
 	    		    int unmatchedWhile = whileStack.pop();
 	    		    WhileBlock whileblock = (WhileBlock) blocks.get(unmatchedWhile);
 	    		    System.err.println("Unmatched if at index " + unmatchedWhile);
+	    		    CodeList.CompError=1;
 	    		    whileblock.setBackground(Color.RED); 
 	    		}
 
