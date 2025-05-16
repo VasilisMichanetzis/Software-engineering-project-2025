@@ -12,13 +12,13 @@
 ---------------------------------------------------------------------
 
 11)sequence diagram για use case 1[X]<-- diorthothike
-12)sequence diagram για use case 2[]<-- thelei diorthosi
+12)sequence diagram για use case 2[X]<-- thelei diorthosi
 
 13)sequence diagram για use case 3[X]
 14)sequence diagram για use case 4[Χ] run
 
-15)sequence diagram για use case 5[]<--mike
-16)sequence diagram για use case 6[]<--mike
+15)sequence diagram για use case 5[X]<--mike
+16)sequence diagram για use case 6[X]<--mike
 17)sequence diagram για use case 7[X] save
 18)sequence diagram για use case 8[X] (και το redo μαζι)
 19)sequence diagram για use case 9[Χ]
@@ -33,7 +33,7 @@ PRIORITY: <---
 ---gui---------------------------------------
 -panels[x]Σωτηρης
 -block creator[x]Σωτηρης
--specific creators for subclasses[]
+-specific creators for subclasses[X]
 --start end math[x]
 --if end if[X]
 --while end while[X]
